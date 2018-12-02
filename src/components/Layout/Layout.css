@@ -1,0 +1,10 @@
+.content {
+    margin: 24px 16px;
+    padding: 24;
+    background: #fff;
+    min-height: 280;
+}
+
+.header {
+    background: #fff; padding: 0;
+}
