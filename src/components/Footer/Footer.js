@@ -4,7 +4,7 @@ const { Footer} = Layout;
 class MainFooter extends Component {
   render() {
     return <Footer style={{ textAlign: 'center' }}>
-    Ant Design ©2018 Created by Ant UED
+     © DevResources By <strong>Nir Adler</strong>
   </Footer>;
   }
 }

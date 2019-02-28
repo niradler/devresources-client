@@ -1,8 +1,8 @@
 
-const host_url = "https://p247j0i6mf.execute-api.us-east-2.amazonaws.com/prod/search";
+const host_url = "https://func.devresources.site/resources/search";
 
-const search = () => {
-  return fetch(host_url).then(res=>res.json()).catch(e=>console.log(e));
+const search = (term='') => {
+  return fetch(host_url + '?q=' + term).then(res=>res.json()).catch(e=>console.log(e));
 };
 
 export default {

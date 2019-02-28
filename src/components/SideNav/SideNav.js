@@ -18,13 +18,10 @@ class SideNav extends Component {
   render() {
     return (
       <Sider
-          trigger={null}
           collapsible
           collapsed={this.state.collapsed}
+          onCollapse={()=>this.setState({collapsed:!this.state.collapsed})}
         >
-        <div onClick={this.toggleCollapsed} className="toggle">
-          <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}/>
-        </div>
           <Menu theme="dark" mode="inline" defaultOpenKeys={['sub1']} >
             <SubMenu key="sub1" title={<span><Icon type="book" /><span>Categories</span></span>}>
             <Menu.Item key="1">
