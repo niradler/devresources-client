@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 import { Row, Col } from "antd";
 import ResourceCard from "../../components/ResourceCard";
-import api from "../../services/api";
+import Api from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
 
 function Home() {
@@ -11,8 +11,8 @@ function Home() {
   const init = async () => {
     try {
         console.log('init',state)
-      const resources = await api.search();
-      dispatch({ type: "resources", payload: resources });
+      const res = await Api.resources();
+      dispatch({ type: "resources", payload: res.data.resources });
     } catch (error) {
       console.log(error);
     }

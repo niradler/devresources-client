@@ -1,10 +1,37 @@
+import ApolloClient from 'apollo-boost';
+import gql from 'graphql-tag';
+const host_url = "https://func.devresources.site/resources/";
 
-const host_url = "https://func.devresources.site/resources/search";
+const client = new ApolloClient({
+  uri: 'https://func.devresources.site/resources/graphql'
+});
 
-const search = (term='') => {
-  return fetch(host_url + '?q=' + term).then(res=>res.json()).catch(e=>console.log(e));
-};
+class Api {
+  static search(term = '') {
+    return fetch(`${host_url}search?q=${term}`)
+      .then(res => res.json())
+      .catch(e => console.log(e));
+  }
 
-export default {
-  search
-};
+  static resources(page=1,pageSize=12){
+    return client.query({
+      query: gql`
+      query {
+        resources(page: ${page}, pageSize: ${pageSize}) {
+          title
+          description
+          link
+          image_url
+          github {
+            forks
+            stargazers_count
+            language
+          }
+        }
+      }
+      `,
+    })
+  }
+}
+
+export default Api

@@ -1,0 +1,6 @@
+.ResourceCard .ant-card-meta-description {
+    height: 138px;
+}
+.ResourceCard .ant-card-meta-description:hover{
+    overflow-y: scroll;
+}

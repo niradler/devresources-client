@@ -4,7 +4,7 @@ const { Footer} = Layout;
 class MainFooter extends Component {
   render() {
     return <Footer style={{ textAlign: 'center' }}>
-     © DevResources By <strong>Nir Adler</strong>
+     © DevResources By <a href="https://niradler.com"><strong>Nir Adler</strong></a>
   </Footer>;
   }
 }
