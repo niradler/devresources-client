@@ -10,7 +10,6 @@ function Home() {
 
   const init = async () => {
     try {
-        console.log('init',state)
       const res = await Api.resources();
       dispatch({ type: "resources", payload: res.data.resources });
     } catch (error) {

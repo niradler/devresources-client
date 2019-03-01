@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Input } from "antd";
 import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
-import api from "../../services/Api";
+import Api from "../../services/Api";
 
 const { Header } = Layout;
 const Search = Input.Search;
@@ -13,8 +13,8 @@ function TopNav (){
 
   const search = async (e) => {
     try {
-      const resources = await api.search(e.target.value);
-      dispatch({ type: "resources", payload: resources });
+      const res = await Api.searchResources(e.target.value);
+      dispatch({ type: "resources", payload: res.data.searchResources });
     } catch (error) {
       console.log(error);
     }
