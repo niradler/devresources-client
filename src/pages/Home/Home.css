@@ -1,0 +1,6 @@
+.pagination {
+    display: flex;
+justify-content: space-between;
+margin-left: 9px;
+margin-right: 9px;
+}

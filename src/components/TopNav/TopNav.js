@@ -13,7 +13,7 @@ function TopNav (){
 
   const search = async (e) => {
     try {
-      const res = await Api.searchResources(e.target.value);
+      const res = await Api.searchResources({term:e.target.value});
       dispatch({ type: "resources", payload: res.data.searchResources });
     } catch (error) {
       console.log(error);
@@ -36,7 +36,7 @@ function TopNav (){
         <div>
           <Search
             onChange={(e)=>search(e)}
-            placeholder="search"
+            placeholder="Search"
             onSearch={value => console.log(value)}
             style={{ width: 200 }}
           />

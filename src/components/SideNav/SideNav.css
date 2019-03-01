@@ -5,3 +5,19 @@
     align-items: center;
     font-size: x-large;
 }
+
+li.ant-menu-item {
+    text-transform: uppercase;
+}
+
+/* ul.ant-menu.ant-menu-sub {
+    max-height: 962px;
+}
+
+ul.ant-menu.ant-menu-sub:hover {
+    overflow-y: scroll;
+}
+
+ ul.ant-menu.ant-menu-sub::-webkit-scrollbar {
+    width: 0px;
+} */

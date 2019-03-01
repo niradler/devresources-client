@@ -1,37 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Menu,Layout,Icon} from 'antd';
 import './SideNav.css';
+import Api from "../../services/Api";
+import { AppContext } from "../../data/AppContext";
 const { Sider} = Layout;
 const SubMenu = Menu.SubMenu;
 
-class SideNav extends Component {
-  state = {
-    collapsed: false,
-  }
+function SideNav () {
+  const { dispatch } = React.useContext(AppContext);
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [tags, setTags] = React.useState([]);
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  }
+  const init = async () => {
+    try {
+      const res = await Api.tags();
+      setTags(res.data.tags);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  render() {
+  const filterByTag = async (title) => {
+    try {
+      const res = await Api.resources({tags:title});
+      dispatch({ type: "resources", payload: res.data.resources });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(
+    () =>{ 
+        init()
+    },[])
+
     return (
       <Sider
           collapsible
-          collapsed={this.state.collapsed}
-          onCollapse={()=>this.setState({collapsed:!this.state.collapsed})}
+          collapsed={collapsed}
+          onCollapse={()=>setCollapsed(!collapsed)}
         >
           <Menu theme="dark" mode="inline" defaultOpenKeys={['sub1']} >
             <SubMenu key="sub1" title={<span><Icon type="book" /><span>Categories</span></span>}>
-            <Menu.Item key="1">
-              Nodejs
+            {tags.map(tag=>(
+              <Menu.Item key= {tag.title} onClick={()=>filterByTag(tag.title)} className="capital">
+              {tag.title}
             </Menu.Item>
+            ))}
             </SubMenu>
           </Menu>
         </Sider>
     );
-  }
 }
 
 export default SideNav;

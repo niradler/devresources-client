@@ -8,11 +8,12 @@ const client = new ApolloClient({
 
 class Api {
 
-  static resources(page=1,pageSize=12){
+  static resources(opt={}){
+    const {page=1,pageSize=12,tags} = opt;
     return client.query({
       query: gql`
       query {
-        resources(page: ${page}, pageSize: ${pageSize}) {
+        resources(${tags ? `tags: "${tags}",` : ''} page: ${page}, pageSize: ${pageSize}) {
           _id
           title
           description
@@ -29,11 +30,11 @@ class Api {
     })
   }
 
-  static tags(page=1,pageSize=12){
+  static tags(){
     return client.query({
       query: gql`
       query {
-        tags(page: ${page}, pageSize: ${pageSize}) {
+        tags {
           _id
           title
           resources          
@@ -43,7 +44,8 @@ class Api {
     })
   }
 
-  static searchResources(term='',page=1,pageSize=12){
+  static searchResources(opt={}){
+    const {term='',page=1,pageSize=12} = opt;
     return client.query({
       query: gql`
       query {
