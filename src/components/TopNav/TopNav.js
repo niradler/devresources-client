@@ -13,8 +13,11 @@ function TopNav (){
 
   const search = async (e) => {
     try {
+      dispatch({ type: "loading", payload: true });
       const res = await Api.searchResources({term:e.target.value});
+      dispatch({ type: "term", payload: e.target.value });
       dispatch({ type: "resources", payload: res.data.searchResources });
+      dispatch({ type: "loading", payload: false });
     } catch (error) {
       console.log(error);
     }

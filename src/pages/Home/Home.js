@@ -1,26 +1,40 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import { Row, Col,Button } from "antd";
+import { Row, Col, Button } from "antd";
 import ResourceCard from "../../components/ResourceCard";
 import Api from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
-import './Home.css';
+import "./Home.css";
 
 function Home() {
   const { state, dispatch } = React.useContext(AppContext);
-  const [page, setPage] = React.useState(1);
 
   const getResources = async () => {
     try {
-      const res = await Api.resources({page});
-      dispatch({ type: "resources", payload: res.data.resources });
+      dispatch({ type: "loading", payload: true });
+      const opt = { page:state.page };
+      if (state.tags) opt.tags = state.tags;
+      if (state.term) opt.term = state.term;
+      if (opt.term) {
+        const res = await Api.searchResources(opt);
+        dispatch({ type: "resources", payload: res.data.searchResources });
+      }else{
+        const res = await Api.resources(opt);
+        dispatch({ type: "resources", payload: res.data.resources });
+      }
+      dispatch({ type: "loading", payload: false });
     } catch (error) {
       console.log(error);
     }
   };
 
   const nextPage = async () => {
-    setPage(page+1);
+    dispatch({ type: "page", payload: state.page +1 });
+    getResources();
+  };
+
+  const previousPage = async () => {
+    dispatch({ type: "page", payload: state.page -1 });
     getResources();
   };
 
@@ -28,12 +42,9 @@ function Home() {
     getResources();
   };
 
-  React.useEffect(
-    () =>{ 
-        init()
-    },
-    []
-  );
+  React.useEffect(() => {
+    init();
+  }, []);
 
   return (
     <div className="Home">
@@ -50,11 +61,17 @@ function Home() {
           ))}
         </Row>
         <Row key="resources-list" gutter={16} className="box-space">
-          {state.resources.length > 0 && <div className="pagination">
-          <Button >Previous</Button>
-          <Button onClick={nextPage}>Next</Button>
-          </div>}
-        </Row> 
+          {(state.resources.length > 0 || state.page > 1) && !state.loading && (
+            <div className="pagination">
+              <Button disabled={state.page === 1} onClick={previousPage}>
+                Previous
+              </Button>
+              <Button disabled={state.resources.length < 12} onClick={nextPage}>
+                Next
+              </Button>
+            </div>
+          )}
+        </Row>
       </Layout>
     </div>
   );

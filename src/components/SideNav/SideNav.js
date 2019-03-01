@@ -23,6 +23,7 @@ function SideNav () {
   const filterByTag = async (title) => {
     try {
       const res = await Api.resources({tags:title});
+      dispatch({ type: "tags", payload: title });
       dispatch({ type: "resources", payload: res.data.resources });
     } catch (error) {
       console.log(error);
@@ -40,8 +41,8 @@ function SideNav () {
           collapsed={collapsed}
           onCollapse={()=>setCollapsed(!collapsed)}
         >
-          <Menu theme="dark" mode="inline" defaultOpenKeys={['sub1']} >
-            <SubMenu key="sub1" title={<span><Icon type="book" /><span>Categories</span></span>}>
+          <Menu theme="dark" mode="inline" defaultOpenKeys={['Categories']} >
+            <SubMenu key="Categories" title={<span><Icon type="build" /><span>Categories</span></span>}>
             {tags.map(tag=>(
               <Menu.Item key= {tag.title} onClick={()=>filterByTag(tag.title)} className="capital">
               {tag.title}

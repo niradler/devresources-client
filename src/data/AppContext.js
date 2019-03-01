@@ -2,7 +2,11 @@ import * as React from "react";
 let AppContext = React.createContext();
 
 let initialState = {
-  resources:[]
+  resources:[],
+  loading:false,
+  page:1,
+  tags:false,
+  term:false
 };
 
 let reducer = (state, action) => {
@@ -11,6 +15,14 @@ let reducer = (state, action) => {
       return initialState;
     case "resources":
       return { ...state, resources:action.payload };
+      case "loading":
+      return { ...state, loading:action.payload };
+      case "page":
+      return { ...state, page:action.payload };
+      case "tags":
+      return { ...state, tags:action.payload };
+      case "term":
+      return { ...state, term:action.payload };
   }
 };
 
