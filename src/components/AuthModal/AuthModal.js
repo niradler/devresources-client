@@ -46,7 +46,7 @@ const AuthModal = () => {
   return (
     <div>
       <Modal
-        title="Basic Modal"
+        title="User"
         visible={state.authModal}
         onOk={e => console.log(e)}
         onCancel={e => close()}
