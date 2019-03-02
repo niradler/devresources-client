@@ -3,6 +3,7 @@ import { Menu,Layout,Icon} from 'antd';
 import './SideNav.css';
 import Api from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
+import MediaQuery from 'react-responsive';
 const { Sider} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -36,7 +37,8 @@ function SideNav () {
     },[])
 
     return (
-      <Sider
+       <MediaQuery query="(min-device-width: 1224px)">
+       <Sider
           collapsible
           collapsed={collapsed}
           onCollapse={()=>setCollapsed(!collapsed)}
@@ -51,6 +53,7 @@ function SideNav () {
             </SubMenu>
           </Menu>
         </Sider>
+    </MediaQuery>
     );
 }
 

@@ -4,6 +4,7 @@ import { Row, Col, Button } from "antd";
 import ResourceCard from "../../components/ResourceCard";
 import Api from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
+import {isMobile} from "react-device-detect";
 import "./Home.css";
 
 function Home() {
@@ -49,18 +50,19 @@ function Home() {
   return (
     <div className="Home">
       <Layout>
-        <Row key="resources-list" gutter={16} className="box-space">
-          {state.resources.map((resource, k2) => (
+        <Row  key="resources-list" gutter={16} className="box-space">
+          {state.resources.map((resource, i) => (
             <Col
-              key={k2}
-              span={6}
+              key={`${resource.title}-${i}`}
+              span={isMobile ? 24 : 6}
               style={{ marginBottom: "5px", marginTop: "5px" }}
             >
-              <ResourceCard {...resource} />
+              <ResourceCard
+               {...resource} />
             </Col>
           ))}
         </Row>
-        <Row key="resources-list" gutter={16} className="box-space">
+        <Row key="pagination" gutter={16} className="box-space">
           {(state.resources.length > 0 || state.page > 1) && !state.loading && (
             <div className="pagination">
               <Button disabled={state.page === 1} onClick={previousPage}>

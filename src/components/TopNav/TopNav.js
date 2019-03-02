@@ -3,6 +3,7 @@ import { Layout, Input } from "antd";
 import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
+import {isMobile} from "react-device-detect";
 
 const { Header } = Layout;
 const Search = Input.Search;
@@ -33,7 +34,7 @@ function TopNav (){
           paddingRight: "15px"
         }}
       >
-        <a className="navbar-item header-logo" href="/">
+        <a className="navbar-item header-logo" style={{ fontSize: isMobile ? '17px' : '34px'}} href="/">
           Dev Resources
         </a>
         <div>
