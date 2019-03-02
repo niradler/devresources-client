@@ -14,9 +14,10 @@ function TopNav (){
 
   const search = async (e) => {
     try {
+      const term = e.target.value;
       dispatch({ type: "loading", payload: true });
-      const res = await Api.searchResources({term:e.target.value});
-      dispatch({ type: "term", payload: e.target.value });
+      const res = await Api.searchResources({term:term});
+      dispatch({ type: "term", payload: term });
       dispatch({ type: "resources", payload: res.data.searchResources });
       dispatch({ type: "loading", payload: false });
     } catch (error) {

@@ -1,0 +1,17 @@
+image: node:alpine
+
+before_script:
+  -  apk update && apk add curl
+  -  npm i -g yarn
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - yarn
+    - yarn build
+    - yarn deploy
+
+    
