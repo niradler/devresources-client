@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.13.0",
     "apollo-boost": "^0.3.1",
+    "aws-amplify": "^1.1.19",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "lodash": "^4.17.11",
@@ -23,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "pre-deploy": "gh-pages -d build",
-    "deploy":"aws s3 cp ./build s3://devresources.site/ --recursive"
+    "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive"
   },
   "eslintConfig": {
     "extends": "react-app"

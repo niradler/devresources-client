@@ -6,7 +6,9 @@ let initialState = {
   loading:false,
   page:1,
   tags:false,
-  term:false
+  term:false,
+  authModal:false,
+  user:{}
 };
 
 let reducer = (state, action) => {
@@ -23,6 +25,10 @@ let reducer = (state, action) => {
       return { ...state, tags:action.payload };
       case "term":
       return { ...state, term:action.payload };
+      case "user":
+      return { ...state, user:action.payload };
+      case "authModal":
+      return { ...state, authModal:action.payload };
   }
 };
 

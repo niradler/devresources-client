@@ -1,15 +1,23 @@
 import React from "react";
 import Image from "react-graceful-image";
 import { Card, Icon } from "antd";
+import { AppContext } from "../../data/AppContext";
 import "./ResourceCard.css";
 const { Meta } = Card;
 const ResourceCard = ({ title, image_url, description, link, github }) => {
+  const { dispatch } = React.useContext(AppContext);
+
+  const addToFav =() => {
+    dispatch({ type: "authModal", payload: true });
+  }
+
   const actions = []
   if (github) {
     if(github.stargazers_count)actions.push(<span>{github.stargazers_count} <Icon type="star" /></span>)
     if(github.forks)actions.push(<span>{github.forks} <Icon type="fork" /></span>)
   }
-  actions.push(<Icon type="heart" />)
+  actions.push(<Icon type="heart" onClick={addToFav}/>);
+
   return (
   <Card
     className="ResourceCard"

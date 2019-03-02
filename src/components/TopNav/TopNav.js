@@ -4,6 +4,7 @@ import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
 import {isMobile} from "react-device-detect";
+import debounce from 'lodash/debounce'
 
 const { Header } = Layout;
 const Search = Input.Search;
@@ -42,7 +43,6 @@ function TopNav (){
           <Search
             onChange={(e)=>search(e)}
             placeholder="Search"
-            onSearch={value => console.log(value)}
             style={{ width: 200 }}
           />
         </div>
