@@ -3,12 +3,27 @@ import Image from "react-graceful-image";
 import { Card, Icon } from "antd";
 import { AppContext } from "../../data/AppContext";
 import "./ResourceCard.css";
+import Amplify from '../../services/Amplify';
+const { Auth, API } = Amplify;
 const { Meta } = Card;
-const ResourceCard = ({ title, image_url, description, link, github }) => {
+const ResourceCard = ({ _id,title, image_url, description, link, github }) => {
   const { dispatch } = React.useContext(AppContext);
 
-  const addToFav =() => {
-    dispatch({ type: "authModal", payload: true });
+  const addToFav = async (resourceId) => {
+    try {
+      await Auth.currentAuthenticatedUser()
+
+      const res = await API.post("favorite", "/favorite", {
+        body: {
+          resourceId: resourceId
+        }
+      });
+      alert(res.message);
+
+    } catch (error) {
+      dispatch({ type: "authModal", payload: true });
+    }
+
   }
 
   const actions = []
@@ -16,7 +31,7 @@ const ResourceCard = ({ title, image_url, description, link, github }) => {
     if(github.stargazers_count)actions.push(<span>{github.stargazers_count} <Icon type="star" /></span>)
     if(github.forks)actions.push(<span>{github.forks} <Icon type="fork" /></span>)
   }
-  actions.push(<Icon type="heart" onClick={addToFav}/>);
+  actions.push(<Icon type="heart" onClick={()=>addToFav(_id)}/>);
 
   return (
   <Card

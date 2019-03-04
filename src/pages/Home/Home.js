@@ -2,25 +2,27 @@ import React from "react";
 import Layout from "../../components/Layout";
 import { Row, Col, Button } from "antd";
 import ResourceCard from "../../components/ResourceCard";
-import Api from "../../services/Api";
+import ApiGQL from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
 import {isMobile} from "react-device-detect";
 import "./Home.css";
+import Amplify from '../../services/Amplify';
+const { Auth, API } = Amplify;
 
 function Home() {
   const { state, dispatch } = React.useContext(AppContext);
 
   const getResources = async () => {
-    try {
+    try {      
       dispatch({ type: "loading", payload: true });
       const opt = { page:state.page };
       if (state.tags) opt.tags = state.tags;
       if (state.term) opt.term = state.term;
       if (opt.term) {
-        const res = await Api.searchResources(opt);
+        const res = await ApiGQL.searchResources(opt);
         dispatch({ type: "resources", payload: res.data.searchResources });
       }else{
-        const res = await Api.resources(opt);
+        const res = await ApiGQL.resources(opt);
         dispatch({ type: "resources", payload: res.data.resources });
       }
       dispatch({ type: "loading", payload: false });
@@ -38,6 +40,15 @@ function Home() {
     dispatch({ type: "page", payload: state.page -1 });
     getResources();
   };
+
+  const restore = async () => {
+    try {
+      await Auth.currentSession();
+      await API.get("favorite", "/favorites");
+    } catch (error) {
+
+    }
+  }
 
   const init = () => {
     getResources();

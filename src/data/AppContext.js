@@ -8,7 +8,7 @@ let initialState = {
   tags:false,
   term:false,
   authModal:false,
-  user:{}
+  auth:{}
 };
 
 let reducer = (state, action) => {
@@ -29,6 +29,8 @@ let reducer = (state, action) => {
       return { ...state, user:action.payload };
       case "authModal":
       return { ...state, authModal:action.payload };
+      case "auth":
+      return { ...state, auth:action.payload };
   }
 };
 

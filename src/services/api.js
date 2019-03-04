@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
-const host_url = 'https://func.devresources.site/resources/graphql';
+const host_url = process.env.REACT_APP_GATEWAY_URL + '/graphql';
 
 const client = new ApolloClient({
   uri: host_url
