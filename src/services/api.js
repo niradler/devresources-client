@@ -1,19 +1,53 @@
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
+import {getToken} from './helpers'
 const host_url = process.env.REACT_APP_GATEWAY_URL + '/graphql';
 
-const client = new ApolloClient({
-  uri: host_url
-});
+const client = new ApolloClient({uri: host_url});
 
 class Api {
 
-  static resources(opt={}){
-    const {page=1,pageSize=12,tags} = opt;
+  static async getFavorites() {
+    try {
+      const token = await getToken();
+      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorites', {
+        headers: new Headers({Authorization: token})
+      });
+
+      return res.json();
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+  static async addFavorites(resourceId) {
+    try {
+      const token = await getToken();
+      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorite', {
+        method: "post",
+        headers: new Headers({Authorization: token}),
+        body: JSON.stringify({resourceId})
+      });
+      
+      return res.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static resources(opt = {}) {
+    const {
+      page = 1,
+      pageSize = 12,
+      tags
+    } = opt;
     return client.query({
-      query: gql`
+      query: gql `
       query {
-        resources(${tags ? `tags: "${tags}",` : ''} page: ${page}, pageSize: ${pageSize}) {
+        resources(${tags
+        ? `tags: "${tags}",`
+        : ''} page: ${page}, pageSize: ${pageSize}) {
           _id
           title
           description
@@ -26,13 +60,12 @@ class Api {
           }
         }
       }
-      `,
+      `
     })
   }
 
-  static tags(){
-    return client.query({
-      query: gql`
+  static tags() {
+    return client.query({query: gql `
       query {
         tags {
           _id
@@ -40,14 +73,16 @@ class Api {
           resources          
         }
       }
-      `,
-    })
+      `})
   }
 
-  static searchResources(opt={}){
-    const {term='',page=1,pageSize=12} = opt;
-    return client.query({
-      query: gql`
+  static searchResources(opt = {}) {
+    const {
+      term = '',
+      page = 1,
+      pageSize = 12
+    } = opt;
+    return client.query({query: gql `
       query {
         searchResources(page: ${page}, pageSize: ${pageSize}, term: "${term}") {
           _id
@@ -62,8 +97,7 @@ class Api {
           }
         }
       }
-      `,
-    })
+      `})
   }
 }
 

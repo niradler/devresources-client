@@ -2,15 +2,14 @@ import React from "react";
 import { AppContext } from "../../data/AppContext";
 import { Button, Modal, Input, Row, Col, Icon } from "antd";
 import Amplify from '../../services/Amplify';
-import aws from '../../services/aws'
-const { Auth,API } = Amplify;
+const { Auth } = Amplify;
 
 const AuthModal = () => {
   const { state, dispatch } = React.useContext(AppContext);
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);  
 
   const close = () => {
     setErrorMessage(null);
@@ -19,15 +18,27 @@ const AuthModal = () => {
 
   const signin = async () => {
     try {
-      const auth = await Auth.signIn(email, password);
-      const jwtToken = auth.signInUserSession.idToken.jwtToken
-      dispatch({ type: "auth", payload: { email, isAuth: true, auth, jwtToken } });
+       await Auth.signIn(email, password);
+       dispatch({ type: "isAuth", payload: true });
       setErrorMessage(null);
       close();
     } catch (error) {
       setErrorMessage("Signin: " + error.message ? error.message : error);
       setLoading(false);
       console.error({ error });
+    }
+  };
+
+  const signout = async () => {
+    try {
+      await Auth.signOut();
+      dispatch({ type: "isAuth", payload: false });
+      setErrorMessage(null);
+      close();
+    } catch (error) {
+      setErrorMessage("signout: " + error.message);
+      setLoading(false);
+      console.error(error);
     }
   };
 
@@ -52,12 +63,20 @@ const AuthModal = () => {
     <div>
       <Modal
         title="User"
-        visible={state.authModal}
+        visible={state.authModal && state.isAuth === false}
         onOk={e => console.log(e)}
         onCancel={e => close()}
         footer={[
           <Button key="back" onClick={e => close()}  loading={loading}>
             Cancel
+          </Button>,
+          <Button
+            key="SignOut"
+            type="ghost"
+            loading={loading}
+            onClick={e => signout(e)}
+          >
+            SignOut
           </Button>,
           <Button
             key="Signup"
@@ -66,7 +85,7 @@ const AuthModal = () => {
             onClick={e => signup(e)}
             disabled={password.length < 6}
           >
-            Signup
+          SignUp
           </Button>,
           <Button
             key="Signin"
@@ -75,7 +94,7 @@ const AuthModal = () => {
             onClick={e => signin(e)}
             disabled={password.length < 6}
           >
-            Signin
+            SignIn
           </Button>
         ]}
       >

@@ -2,12 +2,11 @@ import React from "react";
 import Layout from "../../components/Layout";
 import { Row, Col, Button } from "antd";
 import ResourceCard from "../../components/ResourceCard";
-import ApiGQL from "../../services/Api";
+import Api from "../../services/Api";
 import { AppContext } from "../../data/AppContext";
 import {isMobile} from "react-device-detect";
 import "./Home.css";
-import Amplify from '../../services/Amplify';
-const { Auth, API } = Amplify;
+import {favoritesMap} from '../../services/helpers'
 
 function Home() {
   const { state, dispatch } = React.useContext(AppContext);
@@ -19,10 +18,10 @@ function Home() {
       if (state.tags) opt.tags = state.tags;
       if (state.term) opt.term = state.term;
       if (opt.term) {
-        const res = await ApiGQL.searchResources(opt);
+        const res = await Api.searchResources(opt);
         dispatch({ type: "resources", payload: res.data.searchResources });
       }else{
-        const res = await ApiGQL.resources(opt);
+        const res = await Api.resources(opt);
         dispatch({ type: "resources", payload: res.data.resources });
       }
       dispatch({ type: "loading", payload: false });
@@ -43,15 +42,17 @@ function Home() {
 
   const restore = async () => {
     try {
-      await Auth.currentSession();
-      await API.get("favorite", "/favorites");
+      const res = await Api.getFavorites();
+      dispatch({ type: "favorites", payload: favoritesMap(res) });
+      dispatch({ type: "isAuth", payload: true });
     } catch (error) {
-
+      console.log(error)
     }
   }
 
   const init = () => {
     getResources();
+    restore();
   };
 
   React.useEffect(() => {

@@ -8,7 +8,8 @@ let initialState = {
   tags:false,
   term:false,
   authModal:false,
-  auth:{}
+  isAuth:false,
+  favorites:{}
 };
 
 let reducer = (state, action) => {
@@ -29,8 +30,10 @@ let reducer = (state, action) => {
       return { ...state, user:action.payload };
       case "authModal":
       return { ...state, authModal:action.payload };
-      case "auth":
-      return { ...state, auth:action.payload };
+      case "isAuth":
+      return { ...state, isAuth:action.payload };
+      case "favorites":
+      return { ...state, favorites:action.payload };
   }
 };
 

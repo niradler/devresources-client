@@ -23,8 +23,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pre-deploy": "gh-pages -d build",
-    "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive"
+    "pre-deploy": "gh-pages -d build",  
+    "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive",
+    "deploy:invalidate": "npx s3-redeploy --bucket devresources.site --cwd ./build --cf-dist-id EQ88JLPYUSQ0U"
   },
   "eslintConfig": {
     "extends": "react-app"

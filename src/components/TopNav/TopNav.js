@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Input } from "antd";
+import { Layout, Input,Icon } from "antd";
 import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
@@ -25,7 +25,9 @@ function TopNav (){
       console.log(error);
     }
   };
-
+  const openAuthModal = () =>{
+    dispatch({ type: "authModal", payload: true });
+  }
     return (
       <Header
         className="header"
@@ -39,12 +41,13 @@ function TopNav (){
         <a className="navbar-item header-logo" style={{ fontSize: isMobile ? '17px' : '34px'}} href="/">
           Dev Resources
         </a>
-        <div>
+        <div>       
           <Search
             onChange={(e)=>search(e)}
             placeholder="Search"
             style={{ width: 200 }}
           />
+          <Icon style={{ marginLeft: '6px'}} type="user" onClick={openAuthModal} />
         </div>
       </Header>
     );
