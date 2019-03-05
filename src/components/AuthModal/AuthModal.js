@@ -2,6 +2,7 @@ import React from "react";
 import { AppContext } from "../../data/AppContext";
 import { Button, Modal, Input, Row, Col, Icon } from "antd";
 import Amplify from '../../services/Amplify';
+import notification from '../../components/Notification'
 const { Auth } = Amplify;
 
 const AuthModal = () => {
@@ -25,7 +26,7 @@ const AuthModal = () => {
     } catch (error) {
       setErrorMessage("Signin: " + error.message ? error.message : error);
       setLoading(false);
-      console.error({ error });
+      notification('error',error.message);
     }
   };
 
@@ -38,7 +39,7 @@ const AuthModal = () => {
     } catch (error) {
       setErrorMessage("signout: " + error.message);
       setLoading(false);
-      console.error(error);
+      notification('error',error.message);
     }
   };
 
@@ -50,12 +51,13 @@ const AuthModal = () => {
         password: password
       });
       await Auth.confirmSignUp(email, newUser.confirmationCode);
-      await signin();
+      notification('success','Please check your email to confirm.');
       setErrorMessage(null);
+      close();
     } catch (error) {
       setErrorMessage("Signup: " + error.message);
       setLoading(false);
-      console.error(error);
+      notification('error',error.message);
     }
   };
 
@@ -63,7 +65,7 @@ const AuthModal = () => {
     <div>
       <Modal
         title="User"
-        visible={state.authModal && state.isAuth === false}
+        visible={state.authModal}
         onOk={e => console.log(e)}
         onCancel={e => close()}
         footer={[

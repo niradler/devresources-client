@@ -7,6 +7,7 @@ import { AppContext } from "../../data/AppContext";
 import {isMobile} from "react-device-detect";
 import "./Home.css";
 import {favoritesMap} from '../../services/helpers'
+import notification from '../../components/Notification'
 
 function Home() {
   const { state, dispatch } = React.useContext(AppContext);
@@ -26,7 +27,7 @@ function Home() {
       }
       dispatch({ type: "loading", payload: false });
     } catch (error) {
-      console.log(error);
+      notification('error',error.message);
     }
   };
 
@@ -46,7 +47,7 @@ function Home() {
       dispatch({ type: "favorites", payload: favoritesMap(res) });
       dispatch({ type: "isAuth", payload: true });
     } catch (error) {
-      console.log(error)
+      notification('error',error.message);
     }
   }
 

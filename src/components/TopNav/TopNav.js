@@ -4,6 +4,7 @@ import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
 import {isMobile} from "react-device-detect";
+import notification from '../../components/Notification'
 import debounce from 'lodash/debounce'
 
 const { Header } = Layout;
@@ -11,7 +12,7 @@ const Search = Input.Search;
 
 
 function TopNav (){
-  const { dispatch } = React.useContext(AppContext);
+  const { state,dispatch } = React.useContext(AppContext);
 
   const search = async (e) => {
     try {
@@ -22,11 +23,16 @@ function TopNav (){
       dispatch({ type: "resources", payload: res.data.searchResources });
       dispatch({ type: "loading", payload: false });
     } catch (error) {
-      console.log(error);
+      notification('error',error.message);
     }
   };
+
   const openAuthModal = () =>{
-    dispatch({ type: "authModal", payload: true });
+    if(state.isAuth === false){
+      dispatch({ type: "authModal", payload: true });
+    }else{
+      notification('info',"Already sign in.");
+    }   
   }
     return (
       <Header
@@ -47,7 +53,7 @@ function TopNav (){
             placeholder="Search"
             style={{ width: 200 }}
           />
-          <Icon style={{ marginLeft: '6px'}} type="user" onClick={openAuthModal} />
+          <Icon style={{ marginLeft: '6px'}} type={state.loading ? "loading":"user" } onClick={openAuthModal} />
         </div>
       </Header>
     );

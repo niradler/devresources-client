@@ -36,6 +36,20 @@ class Api {
     }
   }
 
+  static async deleteFavorite(resourceId) {
+    try {
+      const token = await getToken();
+      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorite/' + resourceId, {
+        method: "delete",
+        headers: new Headers({Authorization: token})
+      });
+      
+      return res.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static resources(opt = {}) {
     const {
       page = 1,
