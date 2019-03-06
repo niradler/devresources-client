@@ -24,8 +24,8 @@ function SideNav () {
   const filterByTag = async (title) => {
     try {
       if (title === 'all') {
+         const opt = { page:1 };
         const res = await Api.resources(opt);
-        const opt = { page:1 };
         dispatch({ type: "tags", payload: null });
         dispatch({ type: "resources", payload: res.data.resources });
       }else{
