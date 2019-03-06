@@ -1,7 +1,7 @@
-image: node:alpine
+image: nirsnappy/build-serverless
 
 before_script:
-  -  apk update && apk add curl
+  -  apk update
   -  npm i -g yarn
 
 stages:
@@ -13,5 +13,6 @@ deploy:
     - yarn
     - yarn build
     - yarn deploy
+    - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
 
     
