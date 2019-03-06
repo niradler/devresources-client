@@ -34,6 +34,8 @@ let reducer = (state, action) => {
       return { ...state, isAuth:action.payload };
       case "favorites":
       return { ...state, favorites:action.payload };
+      default:
+      return state;
   }
 };
 
