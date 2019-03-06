@@ -5,7 +5,7 @@ import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
 import {isMobile} from "react-device-detect";
 import notification from '../../components/Notification'
-import debounce from 'lodash/debounce'
+// import debounce from 'lodash/debounce'
 
 const { Header } = Layout;
 const Search = Input.Search;

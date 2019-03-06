@@ -1,7 +1,7 @@
 import Amplify from './Amplify';
 const {Auth} = Amplify;
 
-const currentAuthenticatedUser = async() => Auth.currentAuthenticatedUser();
+// const currentAuthenticatedUser = async() => Auth.currentAuthenticatedUser();
 
 const getToken = async () => {
     const session = await Auth.currentSession().catch(e=> {throw e});
