@@ -15,7 +15,7 @@ function SideNav () {
   const init = async () => {
     try {
       const res = await Api.tags();
-      setTags(res.data.tags);
+      setTags([{title:'all'},...res.data.tags]);
     } catch (error) {
       console.log(error);
     }
@@ -23,9 +23,16 @@ function SideNav () {
 
   const filterByTag = async (title) => {
     try {
-      const res = await Api.resources({tags:title});
-      dispatch({ type: "tags", payload: title });
-      dispatch({ type: "resources", payload: res.data.resources });
+      if (title === 'all') {
+        const res = await Api.resources(opt);
+        const opt = { page:1 };
+        dispatch({ type: "tags", payload: null });
+        dispatch({ type: "resources", payload: res.data.resources });
+      }else{
+        const res = await Api.resources({tags:title});
+        dispatch({ type: "tags", payload: title });
+        dispatch({ type: "resources", payload: res.data.resources });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -43,10 +50,10 @@ function SideNav () {
           collapsed={collapsed}
           onCollapse={()=>setCollapsed(!collapsed)}
         >
-          <Menu theme="dark" mode="inline" defaultOpenKeys={['Categories']} >
+          <Menu theme="dark" mode="inline" defaultOpenKeys={['Categories']}  defaultSelectedKeys={['all']}>
             <SubMenu key="Categories" title={<span><Icon type="build" /><span>Categories</span></span>}>
             {tags.map(tag=>(
-              <Menu.Item key= {tag.title} onClick={()=>filterByTag(tag.title)} className="capital">
+              <Menu.Item key={tag.title} onClick={()=>filterByTag(tag.title)} className="capital">
               {tag.title}
             </Menu.Item>
             ))}

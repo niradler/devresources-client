@@ -7,6 +7,19 @@ const client = new ApolloClient({uri: host_url});
 
 class Api {
 
+  static async getFavoritesResources() {
+    try {
+      const token = await getToken();
+      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorites/resources', {
+        headers: new Headers({Authorization: token})
+      });
+
+      return res.json();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getFavorites() {
     try {
       const token = await getToken();
@@ -18,7 +31,6 @@ class Api {
     } catch (error) {
       throw error;
     }
-
   }
 
   static async addFavorites(resourceId) {

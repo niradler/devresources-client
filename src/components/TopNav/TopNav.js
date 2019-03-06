@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Input,Icon } from "antd";
+import { Layout, Input,Icon,Dropdown,Menu } from "antd";
 import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
@@ -9,7 +9,6 @@ import notification from '../../components/Notification'
 
 const { Header } = Layout;
 const Search = Input.Search;
-
 
 function TopNav (){
   const { state,dispatch } = React.useContext(AppContext);
@@ -27,13 +26,30 @@ function TopNav (){
     }
   };
 
+  const getFavorites = async () => {
+    try {
+      dispatch({ type: "loading", payload: true });
+      const res = await Api.getFavoritesResources();
+      dispatch({ type: "resources", payload: res });
+      dispatch({ type: "loading", payload: false });
+    } catch (error) {
+      notification('error',error.message);
+    }
+  };
+  
   const openAuthModal = () =>{
-    if(state.isAuth === false){
       dispatch({ type: "authModal", payload: true });
-    }else{
-      notification('info',"Already sign in.");
-    }   
   }
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a href="#" onClick={getFavorites} >Favorites</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="#" onClick={openAuthModal}>Authentication</a>
+      </Menu.Item>
+    </Menu>
+  );
     return (
       <Header
         className="header"
@@ -51,9 +67,12 @@ function TopNav (){
           <Search
             onChange={(e)=>search(e)}
             placeholder="Search"
-            style={{ width: 200 }}
+            style={{ width: 200 ,marginRight: '8px'}}
           />
-          <Icon style={{ marginLeft: '6px'}} type={state.loading ? "loading":"user" } onClick={openAuthModal} />
+          <Dropdown overlay={menu} >
+          <Icon  type={state.loading ? "loading":"user" } />
+          </Dropdown>
+        
         </div>
       </Header>
     );

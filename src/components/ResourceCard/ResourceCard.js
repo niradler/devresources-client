@@ -26,7 +26,7 @@ const ResourceCard = ({ _id, title, image_url, description, link, github }) => {
       dispatch({ type: "loading", payload: false }); 
     } catch (error) {
       dispatch({ type: "authModal", payload: true });
-      notification('error',error.message);
+      notification('error',error.message || 'Please SignIn.'); 
     }
   };
 

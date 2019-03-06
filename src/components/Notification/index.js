@@ -4,7 +4,8 @@ const openNotificationWithIcon = (type="success",message="",description="") => {
   notification[type]({
     message: message,
     description: description,
-    duration:2
+    duration:2,
+    placement:"bottomRight"
   });
 };
 

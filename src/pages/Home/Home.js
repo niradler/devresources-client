@@ -47,7 +47,7 @@ function Home() {
       dispatch({ type: "favorites", payload: favoritesMap(res) });
       dispatch({ type: "isAuth", payload: true });
     } catch (error) {
-      notification('error',error.message);
+      console.log(error.message)
     }
   }
 
