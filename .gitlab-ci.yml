@@ -13,5 +13,6 @@ deploy:
     - yarn
     - yarn build
     - yarn deploy
+    - yarn github
 
     

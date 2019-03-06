@@ -23,9 +23,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pre-deploy": "gh-pages -d build",  
+    "pre-deploy": "gh-pages -d build",
     "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive",
-    "deploy:invalidate": "npx s3-redeploy --bucket devresources.site --cwd ./build --cf-dist-id EQ88JLPYUSQ0U"
+    "deploy:invalidate": "npx s3-redeploy --bucket devresources.site --cwd ./build --cf-dist-id EQ88JLPYUSQ0U",
+    "github":"git push -u github master"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +38,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "^2.0.1"
+    "gh-pages": "^2.0.1",
+    "husky": "^1.3.1"
   }
 }
