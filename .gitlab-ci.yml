@@ -1,7 +1,6 @@
 image: nirsnappy/build-serverless
 
 before_script:
-  -  apk update
   -  npm i -g yarn
 
 stages:
