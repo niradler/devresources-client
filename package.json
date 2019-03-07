@@ -25,8 +25,7 @@
     "eject": "react-scripts eject",
     "pre-deploy": "gh-pages -d build",
     "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive",
-    "deploy:invalidate": "npx s3-redeploy --bucket devresources.site --cwd ./build --cf-dist-id EQ88JLPYUSQ0U",
-    "github":"git push github master"
+    "github": "git push github master"
   },
   "eslintConfig": {
     "extends": "react-app"
