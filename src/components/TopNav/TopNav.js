@@ -43,10 +43,10 @@ function TopNav (){
   const menu = (
     <Menu>
       <Menu.Item>
-        <a href="#" onClick={getFavorites} >Favorites</a>
+        <div onClick={getFavorites} >Favorites</div>
       </Menu.Item>
       <Menu.Item>
-        <a href="#" onClick={openAuthModal}>Authentication</a>
+        <div onClick={openAuthModal}>Authentication</div>
       </Menu.Item>
     </Menu>
   );
