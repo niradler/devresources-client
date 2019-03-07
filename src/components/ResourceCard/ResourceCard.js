@@ -3,7 +3,7 @@ import Image from "react-graceful-image";
 import { Card, Icon } from "antd";
 import { AppContext } from "../../data/AppContext";
 import "./ResourceCard.css";
-import {favoritesMap} from '../../services/helpers'
+import {favoritesMap , handleError} from '../../services/helpers'
 import Api from "../../services/Api";
 import notification from '../../components/Notification'
 const { Meta } = Card;
@@ -26,7 +26,7 @@ const ResourceCard = ({ _id, title, image_url, description, link, github }) => {
       dispatch({ type: "loading", payload: false }); 
     } catch (error) {
       dispatch({ type: "authModal", payload: true });
-      notification('error',error.message || 'Please SignIn.'); 
+      handleError(error);
     }
   };
 

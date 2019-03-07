@@ -1,10 +1,11 @@
 import React from "react";
-import { Layout, Input,Icon,Dropdown,Menu } from "antd";
+import { Layout, Input,Icon,Dropdown,Menu,Badge } from "antd";
 import "./TopNav.css";
 import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
 import {isMobile} from "react-device-detect";
-import notification from '../../components/Notification'
+import {handleError} from '../../services/helpers'
+
 // import debounce from 'lodash/debounce'
 
 const { Header } = Layout;
@@ -22,7 +23,7 @@ function TopNav (){
       dispatch({ type: "resources", payload: res.data.searchResources });
       dispatch({ type: "loading", payload: false });
     } catch (error) {
-      notification('error',error.message);
+      handleError(error);
     }
   };
 
@@ -33,7 +34,7 @@ function TopNav (){
       dispatch({ type: "resources", payload: res });
       dispatch({ type: "loading", payload: false });
     } catch (error) {
-      notification('error',error.message);
+      handleError(error);
     }
   };
   
@@ -65,12 +66,15 @@ function TopNav (){
         </a>
         <div>       
           <Search
+          id="search"
             onChange={(e)=>search(e)}
             placeholder="Search"
             style={{ width: 200 ,marginRight: '8px'}}
           />
           <Dropdown overlay={menu} >
+          <Badge id="auth-ind" dot className={state.isAuth ? 'authenticated' : ''}>
           <Icon  type={state.loading ? "loading":"user" } />
+          </Badge>          
           </Dropdown>
         
         </div>

@@ -112,6 +112,8 @@ const AuthModal = () => {
         onCancel={e => close()}
         footer={footer}
       >
+      {!state.isAuth && (
+        <div>
         <Row gutter={16} style={{ marginBottom: "7px" }} key="m-r-1">
           <Col span={24}>
             <Input
@@ -122,7 +124,7 @@ const AuthModal = () => {
             />
           </Col>
         </Row>
-        <Row gutter={16} key="m-r-2">
+    <Row gutter={16} key="m-r-2">
           <Col span={24}>
             <Input
               prefix={<Icon type="lock" />}
@@ -132,7 +134,7 @@ const AuthModal = () => {
               placeholder="Password"
             />
           </Col>
-        </Row>
+        </Row></div>)}
         <Row gutter={16} key="m-r-3">
           <Col style={{ color: "red" }} span={24}>
             {errorMessage}
