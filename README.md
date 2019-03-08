@@ -1,7 +1,9 @@
 # Devresources Client
 
 DevResources is a side project, still trying to make it useful.
-The project help you find the right libraries, you should use in your projects. You can search and sort by tags, to minimize the search. Github details on fork and stars are displayed when possible. Eventually when you find the right libraries you can add the to your favorite for future usage.
+Basically it is a collection of popular libraries and frameworks, an incredibly useful tools for speeding up your next project development.
+You can search and sort by tags, to minimize the search time, Github details on forks and stars are displayed when possible.
+Eventually when you find the right libraries you can add them to your favorites for future usage.
 
 ## Tech Stack
 
