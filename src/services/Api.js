@@ -1,79 +1,89 @@
-import ApolloClient from 'apollo-boost';
-import gql from 'graphql-tag';
-import {getToken} from './helpers'
-const host_url = process.env.REACT_APP_GATEWAY_URL + '/graphql';
-
-const client = new ApolloClient({uri: host_url});
+import { API, graphqlOperation } from "aws-amplify";
+import { withAuthAmplify, noAuthAmplify } from "./Amplify";
+import { getCurrentUser } from "./helpers";
+const queryGraphQl = async ({ query, params = {}, auth }) => {
+  if (auth) {
+    await getCurrentUser();
+    withAuthAmplify();
+    const res = await API.graphql(graphqlOperation(query, params));
+    return res;
+  } else {
+    noAuthAmplify();
+    const res = await API.graphql(graphqlOperation(query, params));
+    return res;
+  }
+};
 
 class Api {
-
-  static async getFavoritesResources() {
-    try {
-      const token = await getToken();
-      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorites/resources', {
-        headers: new Headers({Authorization: token})
-      });
-
-      return res.json();
-    } catch (error) {
-      throw error;
-    }
+  static getFavoritesResources() {
+    return queryGraphQl({
+      query: `
+        query {
+          favoritesResources {
+             _id
+          title
+          description
+          link
+          image_url
+          github {
+            forks
+            stargazers_count
+            language
+          }
+          }
+        }
+      `,
+      auth: true
+    });
   }
 
-  static async getFavorites() {
-    try {
-      const token = await getToken();
-      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorites', {
-        headers: new Headers({Authorization: token})
-      });
-
-      return res.json();
-    } catch (error) {
-      throw error;
-    }
+  static getFavorites() {
+    return queryGraphQl({
+      query: `
+        query {
+          favorites {
+            resourceId
+          }
+        }
+      `,
+      auth: true
+    });
   }
 
-  static async addFavorites(resourceId) {
-    try {
-      const token = await getToken();
-      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorite', {
-        method: "post",
-        headers: new Headers({Authorization: token}),
-        body: JSON.stringify({resourceId})
-      });
-      
-      return res.json();
-    } catch (error) {
-      throw error;
-    }
+  static addFavorite(resourceId) {
+    return queryGraphQl({
+      params: { resourceId },
+      query: `
+      mutation {
+        addFavorite(resourceId: "${resourceId}") {
+      resourceId
+      }
+    }`,
+      auth: true
+    });
   }
 
-  static async deleteFavorite(resourceId) {
-    try {
-      const token = await getToken();
-      const res = await fetch(process.env.REACT_APP_GATEWAY_URL + '/favorite/' + resourceId, {
-        method: "delete",
-        headers: new Headers({Authorization: token})
-      });
-      
-      return res.json();
-    } catch (error) {
-      throw error;
-    }
+  static deleteFavorite(resourceId) {
+    return queryGraphQl({
+      params: { resourceId },
+      query: `
+      mutation {
+        deleteFavorite(resourceId: "${resourceId}") {
+      resourceId
+      }
+    }`,
+      auth: true
+    });
   }
 
   static resources(opt = {}) {
-    const {
-      page = 1,
-      pageSize = 12,
-      tags
-    } = opt;
-    return client.query({
-      query: gql `
+    const { page = 1, pageSize = 12, tags } = opt;
+    return queryGraphQl({
+      query: `
       query {
-        resources(${tags
-        ? `tags: "${tags}",`
-        : ''} page: ${page}, pageSize: ${pageSize}) {
+        resources(${
+          tags ? `tags: "${tags}",` : ""
+        } page: ${page}, pageSize: ${pageSize}) {
           _id
           title
           description
@@ -87,28 +97,27 @@ class Api {
         }
       }
       `
-    })
+    });
   }
 
   static tags() {
-    return client.query({query: gql `
-      query {
-        tags {
-          _id
-          title
-          resources          
+    return queryGraphQl({
+      query: `
+        query {
+          tags {
+            _id
+            title
+            resources
+          }
         }
-      }
-      `})
+      `
+    });
   }
 
   static searchResources(opt = {}) {
-    const {
-      term = '',
-      page = 1,
-      pageSize = 12
-    } = opt;
-    return client.query({query: gql `
+    const { term = "", page = 1, pageSize = 12 } = opt;
+    return queryGraphQl({
+      query: `
       query {
         searchResources(page: ${page}, pageSize: ${pageSize}, term: "${term}") {
           _id
@@ -123,8 +132,9 @@ class Api {
           }
         }
       }
-      `})
+      `
+    });
   }
 }
 
-export default Api
+export default Api;

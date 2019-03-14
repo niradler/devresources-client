@@ -3,29 +3,35 @@ import Image from "react-graceful-image";
 import { Card, Icon } from "antd";
 import { AppContext } from "../../data/AppContext";
 import "./ResourceCard.css";
-import {favoritesMap , handleError} from '../../services/helpers'
+import { favoritesMap, handleError } from "../../services/helpers";
 import Api from "../../services/Api";
-import notification from '../../components/Notification'
+import notification from "../../components/Notification";
 const { Meta } = Card;
 
 const ResourceCard = ({ _id, title, image_url, description, link, github }) => {
-  const { state,dispatch } = React.useContext(AppContext);
+  const { state, dispatch } = React.useContext(AppContext);
 
-  const toggleFav = async (resourceId,type) => {
-    try {  
+  const toggleFav = async (resourceId, type) => {
+    try {
       dispatch({ type: "loading", payload: true });
-      if(type)  {
-        const res = await Api.deleteFavorite(resourceId)
-        dispatch({ type: "favorites", payload: favoritesMap(res.favorites) });        
-        notification('success',res.message);
-      } else{
-        const res = await Api.addFavorites(resourceId)
-        dispatch({ type: "favorites", payload: favoritesMap(res.favorites) });
-        notification('success',res.message);
+      if (type) {
+        const res = await Api.deleteFavorite(resourceId);
+        dispatch({
+          type: "favorites",
+          payload: favoritesMap(res.data.deleteFavorite)
+        });
+        notification("success", "Deleted!");
+      } else {
+        const res = await Api.addFavorite(resourceId);
+        dispatch({
+          type: "favorites",
+          payload: favoritesMap(res.data.addFavorite)
+        });
+        notification("success", "Adeed!");
       }
-      dispatch({ type: "loading", payload: false }); 
+      dispatch({ type: "loading", payload: false });
     } catch (error) {
-      dispatch({ type: "authModal", payload: true });
+      dispatch({ type: "loading", payload: false });
       handleError(error);
     }
   };
@@ -45,7 +51,13 @@ const ResourceCard = ({ _id, title, image_url, description, link, github }) => {
         </span>
       );
   }
-  actions.push(<Icon type="heart" style={{color:state.favorites[_id] ? '#ff4d4fe6' : '#9c9c9c'}} onClick={() => toggleFav(_id,state.favorites[_id])} />);
+  actions.push(
+    <Icon
+      type="heart"
+      style={{ color: state.favorites[_id] ? "#ff4d4fe6" : "#9c9c9c" }}
+      onClick={() => toggleFav(_id, state.favorites[_id])}
+    />
+  );
 
   return (
     <Card

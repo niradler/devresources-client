@@ -16,6 +16,7 @@ const AuthModal = () => {
     setPassword("");
     setErrorMessage(null);
     setLoading(false);
+    dispatch({ type: "loading", payload: false });
     dispatch({ type: "authModal", payload: false });
   };
 
@@ -27,7 +28,7 @@ const AuthModal = () => {
     } catch (error) {
       setErrorMessage("Signin: " + error.message ? error.message : error);
       setLoading(false);
-      notification("error", error.message );
+      notification("error", error.message);
     }
   };
 
@@ -112,29 +113,31 @@ const AuthModal = () => {
         onCancel={e => close()}
         footer={footer}
       >
-      {!state.isAuth && (
-        <div>
-        <Row gutter={16} style={{ marginBottom: "7px" }} key="m-r-1">
-          <Col span={24}>
-            <Input
-              prefix={<Icon type="mail" />}
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Email"
-            />
-          </Col>
-        </Row>
-    <Row gutter={16} key="m-r-2">
-          <Col span={24}>
-            <Input
-              prefix={<Icon type="lock" />}
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="Password"
-            />
-          </Col>
-        </Row></div>)}
+        {!state.isAuth && (
+          <div>
+            <Row gutter={16} style={{ marginBottom: "7px" }} key="m-r-1">
+              <Col span={24}>
+                <Input
+                  prefix={<Icon type="mail" />}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </Col>
+            </Row>
+            <Row gutter={16} key="m-r-2">
+              <Col span={24}>
+                <Input
+                  prefix={<Icon type="lock" />}
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Password"
+                />
+              </Col>
+            </Row>
+          </div>
+        )}
         <Row gutter={16} key="m-r-3">
           <Col style={{ color: "red" }} span={24}>
             {errorMessage}
