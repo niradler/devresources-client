@@ -80,7 +80,7 @@ function TopNav() {
           placeholder="Search"
           style={{ width: 200, marginRight: "8px" }}
         />
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu} trigger={["click", "hover"]}>
           <Badge
             id="auth-ind"
             dot
