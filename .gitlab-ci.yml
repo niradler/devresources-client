@@ -1,7 +1,4 @@
-image: nirsnappy/build-serverless
-
-before_script:
-  -  npm i -g yarn
+image: niradler/aws-client-build
 
 stages:
   - deploy
