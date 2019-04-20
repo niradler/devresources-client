@@ -32,6 +32,7 @@ const AddModal = () => {
       notification("success", "Resource added, please wait for auditing.");
       close();
     } catch (error) {
+      setLoading(false);
       notification("error", "Resource creation has failed.");
     }
   };
