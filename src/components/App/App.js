@@ -1,15 +1,16 @@
-import React from 'react';
-import './App.css';
-import Routes from '../../routes';
-import AuthModal from '../AuthModal'
+import React from "react";
+import "./App.css";
+import Routes from "../../routes";
+import AuthModal from "../AuthModal";
+import AddModal from "../AddModal";
 function App() {
-
-    return (
-      <div className="App">
-        <AuthModal />
+  return (
+    <div className="App">
+      <AuthModal />
+      <AddModal />
       <Routes />
-      </div>
-    );
+    </div>
+  );
 }
 
 export default App;

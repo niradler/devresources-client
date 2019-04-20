@@ -5,7 +5,7 @@ import { AppContext } from "../../data/AppContext";
 import Api from "../../services/Api";
 import { isMobile } from "react-device-detect";
 import { handleError } from "../../services/helpers";
-
+import notification from "../Notification";
 // import debounce from 'lodash/debounce'
 
 const { Header } = Layout;
@@ -46,13 +46,31 @@ function TopNav() {
   const openAuthModal = () => {
     dispatch({ type: "authModal", payload: true });
   };
+
+  const openAddModal = () => {
+    if (!state.isAuth) {
+      notification("error", "Please SignIn.");
+      return;
+    }
+    dispatch({ type: "addModal", payload: true });
+  };
+
   const menu = (
     <Menu>
       <Menu.Item>
-        <div onClick={getFavorites}>Favorites</div>
+        <div onClick={getFavorites}>
+          <Icon type="heart" /> My Favorites
+        </div>
       </Menu.Item>
       <Menu.Item>
-        <div onClick={openAuthModal}>Authentication</div>
+        <div onClick={openAddModal}>
+          <Icon type="form" /> Add Resource
+        </div>
+      </Menu.Item>
+      <Menu.Item>
+        <div onClick={openAuthModal}>
+          <Icon type="lock" /> Authentication
+        </div>
       </Menu.Item>
     </Menu>
   );

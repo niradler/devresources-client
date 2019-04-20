@@ -63,6 +63,19 @@ class Api {
     });
   }
 
+  static addResource({ title, link, description, imageUrl }) {
+    return queryGraphQl({
+      params: { title, link },
+      query: `
+      mutation {
+        addResource(title: "${title}",link: "${link}",description: "${description}",image_url: "${imageUrl}") {
+      _id
+      }
+    }`,
+      auth: true
+    });
+  }
+
   static deleteFavorite(resourceId) {
     return queryGraphQl({
       params: { resourceId },
