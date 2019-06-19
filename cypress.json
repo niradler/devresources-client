@@ -1,0 +1,7 @@
+{
+  "video": false,
+  "pageLoadTimeout": 30000,
+  "defaultCommandTimeout": 10000,
+  "viewportWidth": 1280,
+  "viewportHeight": 720
+}
