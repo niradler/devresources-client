@@ -22,6 +22,7 @@
     "eject": "react-scripts eject",
     "pre-deploy": "gh-pages -d build",
     "deploy": "aws s3 cp ./build s3://devresources.site/ --recursive",
+    "invalidation": "aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'",
     "github": "git push github master",
     "pre-commit": "lint-staged",
     "eslint": "eslint src/*.js --fix",
