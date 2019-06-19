@@ -14,6 +14,7 @@ Eventually when you find the right libraries you can add them to your favorites 
 - And Design
 - Aws-Amplify
 - Graphql
+- Cypress
 
 [Check it Out](https://devresources.site)
 
