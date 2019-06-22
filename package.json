@@ -27,7 +27,8 @@
     "pre-commit": "lint-staged",
     "eslint": "eslint src/*.js --fix",
     "cypress": "./node_modules/.bin/cypress open",
-    "test": "npm run build && cd build && pm2 serve -p 3000 && ./node_modules/.bin/cypress run"
+    "test": "./node_modules/.bin/cypress run",
+    "report": "node ./cypress/utils/runAndReport.js"
   },
   "husky": {
     "hooks": {
@@ -47,15 +48,22 @@
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "cypress": "^3.3.1",
+    "cypress-multi-reporters": "^1.1.22",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-react": "^7.13.0",
+    "fs-extra": "^8.0.1",
     "gh-pages": "^2.0.1",
     "husky": "^2.4.1",
     "lint-staged": "^8.2.1",
+    "mocha": "^6.1.4",
+    "mocha-junit-reporters": "^1.23.6",
+    "mochawesome": "^4.0.1",
+    "mochawesome-merge": "^2.0.1",
+    "mochawesome-report-generator": "^4.0.0",
     "pm2": "^3.5.1",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1"
