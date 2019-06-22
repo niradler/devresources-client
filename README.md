@@ -1,4 +1,5 @@
 # Devresources Client
+[Tests Suite](https://niradler.github.io/devresources-client/)
 
 Basically it is a collection of popular libraries and frameworks, an incredibly useful tools for speeding up your next project development.
 

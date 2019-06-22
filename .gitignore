@@ -26,3 +26,5 @@ yarn-error.log*
 
 cypress/reports
 cypress/screenshots
+
+.vscode
