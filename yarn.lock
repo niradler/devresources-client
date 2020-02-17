@@ -7534,9 +7534,9 @@ mochawesome-report-generator@4.0.0, mochawesome-report-generator@^4.0.0:
     validator "^10.11.0"
     yargs "^13.2.2"
 
-mochawesome@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/mochawesome/-/mochawesome-4.0.1.tgz#351af69c8904468e75a71f8704ed0b5767795ccc"
+mochawesome@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/mochawesome/-/mochawesome-4.1.0.tgz#57cdb9509a9fc54790884ec867e109644ba949ee"
   dependencies:
     chalk "^2.4.1"
     diff "^4.0.1"
