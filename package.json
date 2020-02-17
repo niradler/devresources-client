@@ -65,7 +65,7 @@
     "mochawesome-merge": "2.0.1",
     "mochawesome-report-generator": "4.0.0",
     "pm2": "3.5.1",
-    "prettier": "1.18.2",
+    "prettier": "1.19.1",
     "pretty-quick": "1.11.1"
   },
   "browserslist": [
