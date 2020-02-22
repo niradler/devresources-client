@@ -3681,9 +3681,9 @@ cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
 
-cypress-multi-reporters@1.1.22:
-  version "1.1.22"
-  resolved "https://registry.yarnpkg.com/cypress-multi-reporters/-/cypress-multi-reporters-1.1.22.tgz#eaaf0527a056ce1026df235fc3c4ecc9a8155f81"
+cypress-multi-reporters@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/cypress-multi-reporters/-/cypress-multi-reporters-1.2.4.tgz#bf6c95f39f9d2ce210d83e096f452a306bcd49fc"
   dependencies:
     debug "^4.1.1"
     lodash "^4.17.11"
