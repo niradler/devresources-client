@@ -59,7 +59,7 @@
     "gh-pages": "2.0.1",
     "husky": "2.4.1",
     "lint-staged": "8.2.1",
-    "mocha": "6.1.4",
+    "mocha": "6.2.3",
     "mocha-junit-reporters": "1.23.6",
     "mochawesome": "4.0.1",
     "mochawesome-merge": "2.0.1",
