@@ -1988,9 +1988,9 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@3.26.9:
-  version "3.26.9"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-3.26.9.tgz#233c9d090c44146997984966d3b3657c9426bac1"
+antd@3.26.16:
+  version "3.26.16"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.26.16.tgz#699c01d07be23ed8c06cc21ef6a0abc71603c6ae"
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~2.1.1"
